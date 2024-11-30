@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+
+    <!-- Add the reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .btn-submit {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+      
+  .custom-submit-btn {
+    display: block;        
+    width: auto;            
+    padding: 12px 24px;     
+    font-size: 16px;  
+    margin-top: 20px;  
+    margin-left: 0;      
+    background-color: #007bff;
+    color: white;        
+    border: none;         
+    border-radius: 4px;    
+    transition: background-color 0.3s; 
+  }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row align-items-center justify-content-center" style="height: 100vh">
+        <div class="col-lg-7 text-center text-lg-start txt">
+            <h1>Send Us Your Query</h1>
+            <h4>We'll get back to you as soon as possible.</h4>
+        </div>
+        <div class="col-lg-5">
+            <div class="bg-white p-4 rounded-3 shadow text-center">
+                <h4 class="text-dark">Send us your query</h4>
+                <p class="text-muted">Fill in the form to get started</p>
+                <form class="form" action="{% url 'contactus' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" id="name" class="form-control" placeholder="Name" name="name" value="" required />
+                    <input type="email" class="form-control" id="email" placeholder="Email" value=""/>
+                    <input type="text" class="form-control" id="subject" name="subject" maxlength="40" placeholder="Subject" value="" required />
+                    <textarea class="form-control" id="problem" name="comment" rows="3" maxlength="800" placeholder="Message" required></textarea>
+                    <select class="form-control" id="problem_type" name="problem_type" required>
+                        <option value="technical issue">Technical Issue</option>
+                        <option value="payment issue">Payment Issue</option>
+                        <option value="server issue">Server Issue</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <!-- reCAPTCHA Widget -->
+                    <div class="g-recaptcha"  data-sitekey="your-site-key"></div>
+
+                    {% if messages %}
+                    <div class="container mt-3">
+                      {% for message in messages %}
+                        <div class="alert alert-danger">
+                          {{ message }}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                    <button type="submit" class="btn btn-submit custom-submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Bootstrap JS (optional for interactive elements) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>
